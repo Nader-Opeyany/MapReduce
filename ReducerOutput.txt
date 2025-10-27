@@ -1,0 +1,1 @@
+Alice	50Bob	70Charlie	40

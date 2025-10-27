@@ -15,7 +15,7 @@ def MapOutput(line :str):
     try:
         if (re.match(r'^[A-Za-z]+,\s*\d+$', line)):
             cutomerIDFrontPortionOfString,moneySpentPerTransactionString= line.strip().split(',')
-            return "{}\t{}".format(cutomerIDFrontPortionOfString,moneySpentPerTransactionString)
+            return "{}\t{}".format(cutomerIDFrontPortionOfString,moneySpentPerTransactionString.strip())
     except:
         print("Could not process{}".format(line)) 
     

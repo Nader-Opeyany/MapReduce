@@ -4,13 +4,22 @@ from operator import itemgetter
 #Simlates distribute computing env, key value dictionaries made
 
 def main():
-    #data = ReadMapperOutput(sys.stdin)#pipe in MapperOutput.txt
-    with open("MapperOutput.txt",'r') as file,open('ShuffleOutput.txt','w') as outFile:
-        data = sorted(ReadMapperOutput(file), key = lambda x: x[0])
-        for key, keygroup in groupby(data,key = lambda x: x[0]):
-            print([(k,v) for k,v in keygroup])
-            #outFile.write()
+    with open("MapperOutput.txt", 'r') as file:
+        # Sort the mapper output by CustomerID (the key)
+        data = sorted(ReadMapperOutput(file), key=lambda x: x[0])
 
+        with open("ShuffleOutput.txt", "w") as outFile:
+            # Group transactions by customer name
+            for key, keygroup in groupby(data, key=lambda x: x[0]):
+                # Extract only the values for this customer
+                values = [v for _, v in keygroup]
+
+                # Join all amounts into one string
+                combindedVal = " ".join(values)
+
+                # Write grouped result to file and console
+                outFile.write("{}\t{}\n".format(key, combindedVal))
+                print("{}\t{}".format(key, combindedVal))  # optional debug view
 
 def ReadMapperOutput(file):
     '''
