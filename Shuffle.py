@@ -4,9 +4,12 @@ from operator import itemgetter
 #Simlates distribute computing env, key value dictionaries made
 
 def main():
-    data = ReadMapperOutput(sys.stdin)
-    for key, keygroup in groupby(data,item):
-        pass
+    #data = ReadMapperOutput(sys.stdin)#pipe in MapperOutput.txt
+    with open("MapperOutput.txt",'r') as file,open('ShuffleOutput.txt','w') as outFile:
+        data = sorted(ReadMapperOutput(file), key = lambda x: x[0])
+        for key, keygroup in groupby(data,key = lambda x: x[0]):
+            print([(k,v) for k,v in keygroup])
+            #outFile.write()
 
 
 def ReadMapperOutput(file):
@@ -17,7 +20,7 @@ def ReadMapperOutput(file):
     '''
 
     for line in file:
-        yield line.split('\t') #returns two values, list of strings
+        yield line.strip().split('\t') #returns two values, list of strings
 
 if __name__ == "__main__":
-    pass
+    main()
